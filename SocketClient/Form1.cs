@@ -14,6 +14,7 @@ namespace SocketClient
 {
     public partial class Form1 : Form
     {
+        string user = "";
         Socket cc = null;
         Thread clientThread = null;
         public Form1()
@@ -25,6 +26,17 @@ namespace SocketClient
         {
              
         }
+
+        /// <summary>
+        /// 向服务器发送消息
+        /// </summary>
+        /// <param name="p_strMessage"></param>
+        public void SendMessage(string p_strMessage)
+        {
+            byte[] bs = Encoding.ASCII.GetBytes(p_strMessage);   //把字符串编码为字节
+            cc.Send(bs, bs.Length, 0); //发送信息
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -41,7 +53,8 @@ namespace SocketClient
                 c.Connect(ipe); //连接到服务器
                 clientThread = new Thread(new ThreadStart(ReceiveData));
                 clientThread.Start();
-                SetText("Connecting...");
+                SetText("连接到服务器");
+               
             }
             catch (ArgumentException ex)
             {
@@ -56,8 +69,8 @@ namespace SocketClient
         private void button3_Click(object sender, EventArgs e)
         {
             //向服务器发送信息
-            string sendStr = txt_message.Text;
-            byte[] bs = Encoding.ASCII.GetBytes(sendStr);   //把字符串编码为字节
+            string sendStr = user + ":" + txt_message.Text;
+            byte[] bs = Encoding.UTF8.GetBytes(sendStr);   //把字符串编码为字节
             cc.Send(bs, bs.Length, 0); //发送信息
             rch_back.Text += "\n 我：" + sendStr;
             txt_message.Text = "";
@@ -88,7 +101,7 @@ namespace SocketClient
                     byte[] recvBytes = new byte[1024];
                     int bytes;
                     bytes = cc.Receive(recvBytes, recvBytes.Length, 0);    //从服务器端接受返回信息
-                    recvStr = "\n Server:" + Encoding.ASCII.GetString(recvBytes, 0, bytes);
+                    recvStr = "\n Server:" + Encoding.UTF8.GetString(recvBytes, 0, bytes);
                     SetText(recvStr);
                 }
             }
@@ -101,7 +114,25 @@ namespace SocketClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            cc.Close();
+            cc.Shutdown(SocketShutdown.Both);
+        }
+
+        private void dgv_friend_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                user = dgv_friend[e.ColumnIndex, e.RowIndex].Value.ToString();
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
+           
+        }
+
+        private void btn_add_Click(object sender, EventArgs e)
+        {
+            dgv_friend.Rows.Add(txt_user.Text);
         }
     }
 }

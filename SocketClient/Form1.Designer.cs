@@ -38,11 +38,22 @@
             this.txt_port = new System.Windows.Forms.TextBox();
             this.rch_back = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txt_name = new System.Windows.Forms.TextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.dgv_friend = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txt_user = new System.Windows.Forms.TextBox();
+            this.btn_add = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_friend)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(193, 6);
+            this.button1.Location = new System.Drawing.Point(194, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -52,7 +63,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(193, 34);
+            this.button2.Location = new System.Drawing.Point(194, 33);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -62,7 +73,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(191, 285);
+            this.button3.Location = new System.Drawing.Point(194, 301);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 2;
@@ -72,7 +83,7 @@
             // 
             // txt_message
             // 
-            this.txt_message.Location = new System.Drawing.Point(12, 285);
+            this.txt_message.Location = new System.Drawing.Point(13, 300);
             this.txt_message.Name = "txt_message";
             this.txt_message.Size = new System.Drawing.Size(160, 21);
             this.txt_message.TabIndex = 4;
@@ -80,7 +91,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 11);
+            this.label2.Location = new System.Drawing.Point(13, 11);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(17, 12);
             this.label2.TabIndex = 3;
@@ -88,16 +99,16 @@
             // 
             // txt_ip
             // 
-            this.txt_ip.Location = new System.Drawing.Point(72, 7);
+            this.txt_ip.Location = new System.Drawing.Point(73, 7);
             this.txt_ip.Name = "txt_ip";
             this.txt_ip.Size = new System.Drawing.Size(102, 21);
             this.txt_ip.TabIndex = 4;
-            this.txt_ip.Text = "127.0.0.1";
+            this.txt_ip.Text = "192.168.70.99";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 36);
+            this.label3.Location = new System.Drawing.Point(13, 38);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 3;
@@ -105,7 +116,7 @@
             // 
             // txt_port
             // 
-            this.txt_port.Location = new System.Drawing.Point(72, 36);
+            this.txt_port.Location = new System.Drawing.Point(73, 34);
             this.txt_port.Name = "txt_port";
             this.txt_port.Size = new System.Drawing.Size(102, 21);
             this.txt_port.TabIndex = 4;
@@ -113,7 +124,7 @@
             // 
             // rch_back
             // 
-            this.rch_back.Location = new System.Drawing.Point(12, 86);
+            this.rch_back.Location = new System.Drawing.Point(13, 92);
             this.rch_back.Name = "rch_back";
             this.rch_back.Size = new System.Drawing.Size(256, 193);
             this.rch_back.TabIndex = 5;
@@ -122,32 +133,107 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 61);
+            this.label4.Location = new System.Drawing.Point(13, 65);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 6;
-            this.label4.Text = "返回信息";
+            this.label4.Text = "昵称";
+            // 
+            // txt_name
+            // 
+            this.txt_name.Location = new System.Drawing.Point(75, 61);
+            this.txt_name.Name = "txt_name";
+            this.txt_name.Size = new System.Drawing.Size(100, 21);
+            this.txt_name.TabIndex = 7;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.txt_name);
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
+            this.splitContainer1.Panel1.Controls.Add(this.button2);
+            this.splitContainer1.Panel1.Controls.Add(this.rch_back);
+            this.splitContainer1.Panel1.Controls.Add(this.button3);
+            this.splitContainer1.Panel1.Controls.Add(this.txt_port);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.txt_ip);
+            this.splitContainer1.Panel1.Controls.Add(this.txt_message);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.btn_add);
+            this.splitContainer1.Panel2.Controls.Add(this.txt_user);
+            this.splitContainer1.Panel2.Controls.Add(this.dgv_friend);
+            this.splitContainer1.Size = new System.Drawing.Size(512, 332);
+            this.splitContainer1.SplitterDistance = 286;
+            this.splitContainer1.TabIndex = 8;
+            // 
+            // dgv_friend
+            // 
+            this.dgv_friend.AllowUserToAddRows = false;
+            this.dgv_friend.AllowUserToDeleteRows = false;
+            this.dgv_friend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_friend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1});
+            this.dgv_friend.Location = new System.Drawing.Point(3, 33);
+            this.dgv_friend.Name = "dgv_friend";
+            this.dgv_friend.ReadOnly = true;
+            this.dgv_friend.RowHeadersWidth = 10;
+            this.dgv_friend.RowTemplate.Height = 23;
+            this.dgv_friend.Size = new System.Drawing.Size(222, 296);
+            this.dgv_friend.TabIndex = 0;
+            this.dgv_friend.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_friend_CellClick);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "FRIEND";
+            this.Column1.HeaderText = "好友";
+            this.Column1.MinimumWidth = 200;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 200;
+            // 
+            // txt_user
+            // 
+            this.txt_user.Location = new System.Drawing.Point(9, 7);
+            this.txt_user.Name = "txt_user";
+            this.txt_user.Size = new System.Drawing.Size(129, 21);
+            this.txt_user.TabIndex = 1;
+            // 
+            // btn_add
+            // 
+            this.btn_add.Location = new System.Drawing.Point(144, 6);
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(75, 23);
+            this.btn_add.TabIndex = 2;
+            this.btn_add.Text = "添加";
+            this.btn_add.UseVisualStyleBackColor = true;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 318);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.rch_back);
-            this.Controls.Add(this.txt_port);
-            this.Controls.Add(this.txt_ip);
-            this.Controls.Add(this.txt_message);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(512, 332);
+            this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Clicent";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_friend)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -163,6 +249,12 @@
         private System.Windows.Forms.TextBox txt_port;
         private System.Windows.Forms.RichTextBox rch_back;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txt_name;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridView dgv_friend;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Button btn_add;
+        private System.Windows.Forms.TextBox txt_user;
     }
 }
 
