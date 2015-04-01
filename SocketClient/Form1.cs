@@ -9,12 +9,14 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using ToolFunction;
 
 namespace SocketClient
 {
     public partial class Form1 : Form
     {
-        string user = "";
+        string target = "";
+        string users = "";
         Socket cc = null;
         Thread clientThread = null;
         public Form1()
@@ -33,7 +35,7 @@ namespace SocketClient
         /// <param name="p_strMessage"></param>
         public void SendMessage(string p_strMessage)
         {
-            byte[] bs = Encoding.ASCII.GetBytes(p_strMessage);   //把字符串编码为字节
+            byte[] bs = Encoding.UTF8.GetBytes(p_strMessage);   //把字符串编码为字节
             cc.Send(bs, bs.Length, 0); //发送信息
         }
 
@@ -53,8 +55,8 @@ namespace SocketClient
                 c.Connect(ipe); //连接到服务器
                 clientThread = new Thread(new ThreadStart(ReceiveData));
                 clientThread.Start();
-                SetText("连接到服务器");
-               
+                //向服务器发送本机用户名，以便服务器注册客户端
+                SendMessage("@" + txt_name.Text);
             }
             catch (ArgumentException ex)
             {
@@ -69,10 +71,9 @@ namespace SocketClient
         private void button3_Click(object sender, EventArgs e)
         {
             //向服务器发送信息
-            string sendStr = user + ":" + txt_message.Text;
-            byte[] bs = Encoding.UTF8.GetBytes(sendStr);   //把字符串编码为字节
-            cc.Send(bs, bs.Length, 0); //发送信息
-            rch_back.Text += "\n 我：" + sendStr;
+            string sendStr = txt_name.Text + "@" + target + ":" + txt_message.Text;
+            SendMessage(sendStr);
+            rch_back.Text += "\n" + sendStr;
             txt_message.Text = "";
         }
 
@@ -86,9 +87,46 @@ namespace SocketClient
             }
             else
             {
-                rch_back.Text += text;
+                rch_back.Text += "\n" + text;
             }
-        } 
+        }
+
+        /// <summary>
+        /// 刷新客户端列表
+        /// </summary>
+        public void RefreshClient(string mess)
+        {
+            if (mess.Contains("@"))
+            {
+                //MessageBox.Show(mess);
+                DataTable _dtSocket = new DataTable();
+                _dtSocket.Columns.Add("Client");
+                mess = mess.Remove(0, 1);
+                string[] userarray = mess.Split(';');
+                foreach (string item in userarray)
+                {
+                    _dtSocket.Rows.Add(item);
+                }
+                SetDataSource(_dtSocket);
+            }
+
+        }
+
+        public delegate void SetDataSourceHandler(DataTable p_dtSource);
+        private void SetDataSource(DataTable p_dtSource)
+        {
+            if (dgv_client.InvokeRequired == true)
+            {
+                SetDataSourceHandler set = new SetDataSourceHandler(SetDataSource);//委托的方法参数应和SetText一致 
+                dgv_client.Invoke(set, new object[] { p_dtSource }); //此方法第二参数用于传入方法,代替形参text 
+            }
+            else
+            {
+                dgv_client.DataSource = p_dtSource;
+            }
+
+        }
+
 
         public void ReceiveData()
         {
@@ -101,38 +139,57 @@ namespace SocketClient
                     byte[] recvBytes = new byte[1024];
                     int bytes;
                     bytes = cc.Receive(recvBytes, recvBytes.Length, 0);    //从服务器端接受返回信息
-                    recvStr = "\n Server:" + Encoding.UTF8.GetString(recvBytes, 0, bytes);
+                    recvStr =  Encoding.UTF8.GetString(recvBytes, 0, bytes);
+                    RefreshClient(recvStr);
                     SetText(recvStr);
                 }
             }
             catch (Exception exp)
             {
-                MessageBox.Show(exp.Message);
+                CommonFunction.WriteLog(exp,exp.Message);
             }
         }
 
 
         private void button2_Click(object sender, EventArgs e)
         {
-            cc.Shutdown(SocketShutdown.Both);
+            try
+            {
+                SendMessage(">" + txt_name.Text);
+                //cc.Disconnect(true);
+                //cc.Shutdown(SocketShutdown.Both);
+                //cc.Close();
+            }
+            catch (Exception exp)
+            {
+                CommonFunction.WriteLog(exp, exp.Message);
+            }
         }
 
         private void dgv_friend_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                user = dgv_friend[e.ColumnIndex, e.RowIndex].Value.ToString();
+                target = dgv_client[e.ColumnIndex, e.RowIndex].Value.ToString();
             }
             catch (Exception exp)
             {
-                MessageBox.Show(exp.Message);
+                CommonFunction.WriteLog(exp, exp.Message);
             }
            
         }
 
-        private void btn_add_Click(object sender, EventArgs e)
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            dgv_friend.Rows.Add(txt_user.Text);
+            if (cc!=null)
+            {
+                cc.Close();
+            }
+            if (clientThread!=null)
+            {
+                clientThread.Abort();
+            }
         }
     }
 }

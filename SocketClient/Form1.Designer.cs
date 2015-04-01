@@ -40,15 +40,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dgv_friend = new System.Windows.Forms.DataGridView();
+            this.dgv_client = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txt_user = new System.Windows.Forms.TextBox();
-            this.btn_add = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_friend)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_client)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -67,7 +65,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
-            this.button2.Text = "断开连接";
+            this.button2.Text = "隐身";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -128,7 +126,6 @@
             this.rch_back.Name = "rch_back";
             this.rch_back.Size = new System.Drawing.Size(256, 193);
             this.rch_back.TabIndex = 5;
-            this.rch_back.Text = "";
             // 
             // label4
             // 
@@ -145,6 +142,7 @@
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(100, 21);
             this.txt_name.TabIndex = 7;
+            this.txt_name.Text = "小红";
             // 
             // splitContainer1
             // 
@@ -168,54 +166,36 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.btn_add);
-            this.splitContainer1.Panel2.Controls.Add(this.txt_user);
-            this.splitContainer1.Panel2.Controls.Add(this.dgv_friend);
+            this.splitContainer1.Panel2.Controls.Add(this.dgv_client);
             this.splitContainer1.Size = new System.Drawing.Size(512, 332);
             this.splitContainer1.SplitterDistance = 286;
             this.splitContainer1.TabIndex = 8;
             // 
-            // dgv_friend
+            // dgv_client
             // 
-            this.dgv_friend.AllowUserToAddRows = false;
-            this.dgv_friend.AllowUserToDeleteRows = false;
-            this.dgv_friend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_friend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgv_client.AllowUserToAddRows = false;
+            this.dgv_client.AllowUserToDeleteRows = false;
+            this.dgv_client.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_client.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            this.dgv_friend.Location = new System.Drawing.Point(3, 33);
-            this.dgv_friend.Name = "dgv_friend";
-            this.dgv_friend.ReadOnly = true;
-            this.dgv_friend.RowHeadersWidth = 10;
-            this.dgv_friend.RowTemplate.Height = 23;
-            this.dgv_friend.Size = new System.Drawing.Size(222, 296);
-            this.dgv_friend.TabIndex = 0;
-            this.dgv_friend.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_friend_CellClick);
+            this.dgv_client.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_client.Location = new System.Drawing.Point(0, 0);
+            this.dgv_client.Name = "dgv_client";
+            this.dgv_client.ReadOnly = true;
+            this.dgv_client.RowHeadersWidth = 10;
+            this.dgv_client.RowTemplate.Height = 23;
+            this.dgv_client.Size = new System.Drawing.Size(222, 332);
+            this.dgv_client.TabIndex = 0;
+            this.dgv_client.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_friend_CellClick);
             // 
             // Column1
             // 
-            this.Column1.DataPropertyName = "FRIEND";
+            this.Column1.DataPropertyName = "Client";
             this.Column1.HeaderText = "好友";
             this.Column1.MinimumWidth = 200;
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             this.Column1.Width = 200;
-            // 
-            // txt_user
-            // 
-            this.txt_user.Location = new System.Drawing.Point(9, 7);
-            this.txt_user.Name = "txt_user";
-            this.txt_user.Size = new System.Drawing.Size(129, 21);
-            this.txt_user.TabIndex = 1;
-            // 
-            // btn_add
-            // 
-            this.btn_add.Location = new System.Drawing.Point(144, 6);
-            this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(75, 23);
-            this.btn_add.TabIndex = 2;
-            this.btn_add.Text = "添加";
-            this.btn_add.UseVisualStyleBackColor = true;
-            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
             // Form1
             // 
@@ -225,14 +205,14 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Clicent";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_friend)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_client)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -251,10 +231,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txt_name;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dgv_friend;
+        private System.Windows.Forms.DataGridView dgv_client;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.Button btn_add;
-        private System.Windows.Forms.TextBox txt_user;
     }
 }
 
