@@ -17,6 +17,7 @@ namespace SocketClient
     {
         string target = "";
         string users = "";
+        string user = "";
         Socket cc = null;
         Thread clientThread = null;
         public Form1()
@@ -43,7 +44,8 @@ namespace SocketClient
         private void button1_Click(object sender, EventArgs e)
         {
              try
-            {
+             {
+                 user = txt_name.Text;
                 int port = int.Parse(txt_port.Text);
                 string host = txt_ip.Text;
                 //创建终结点EndPoint
@@ -68,8 +70,36 @@ namespace SocketClient
             }
         }
 
+        /// <summary>
+        /// 解析字符串，假如是发给自己的消息则格式化消息格式
+        /// </summary>
+        /// <param name="p_strMessage">消息字符串</param>
+        /// <returns></returns>
+        public void FiltMessage(string p_strMessage)
+        {
+            if (p_strMessage.Contains("@") && p_strMessage.Contains(":"))
+            {
+                string _strTemp = "";
+                string[] u = p_strMessage.Split('@');
+                string[] s = u[1].Split(':');
+                string sender = u[0];
+                string veceiver = s[0];
+                string message = s[1];
+                if (txt_name.Text == veceiver)
+                {
+                    _strTemp = sender + ":" + message;
+                    SetText(_strTemp);
+                }
+            }
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
+            if (""==txt_target.Text)
+            {
+                MessageBox.Show("未选择对话人物");
+                return;
+            }
             //向服务器发送信息
             string sendStr = txt_name.Text + "@" + target + ":" + txt_message.Text;
             SendMessage(sendStr);
@@ -96,7 +126,7 @@ namespace SocketClient
         /// </summary>
         public void RefreshClient(string mess)
         {
-            if (mess.Contains("@"))
+            if (mess.StartsWith("@"))
             {
                 //MessageBox.Show(mess);
                 DataTable _dtSocket = new DataTable();
@@ -141,7 +171,7 @@ namespace SocketClient
                     bytes = cc.Receive(recvBytes, recvBytes.Length, 0);    //从服务器端接受返回信息
                     recvStr =  Encoding.UTF8.GetString(recvBytes, 0, bytes);
                     RefreshClient(recvStr);
-                    SetText(recvStr);
+                    FiltMessage(recvStr);
                 }
             }
             catch (Exception exp)
@@ -171,6 +201,7 @@ namespace SocketClient
             try
             {
                 target = dgv_client[e.ColumnIndex, e.RowIndex].Value.ToString();
+                txt_target.Text = target;
             }
             catch (Exception exp)
             {
