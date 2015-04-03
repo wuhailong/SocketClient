@@ -45,9 +45,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dgv_client = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.txt_target = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dgv_client = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -96,6 +96,7 @@
             this.txt_message.Name = "txt_message";
             this.txt_message.Size = new System.Drawing.Size(160, 23);
             this.txt_message.TabIndex = 4;
+            this.txt_message.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_message_KeyPress);
             // 
             // label2
             // 
@@ -114,7 +115,7 @@
             this.txt_ip.Name = "txt_ip";
             this.txt_ip.Size = new System.Drawing.Size(102, 23);
             this.txt_ip.TabIndex = 4;
-            this.txt_ip.Text = "192.168.70.99";
+            this.txt_ip.Text = "192.168.1.103";
             // 
             // label3
             // 
@@ -192,6 +193,25 @@
             this.splitContainer1.SplitterDistance = 286;
             this.splitContainer1.TabIndex = 8;
             // 
+            // txt_target
+            // 
+            this.txt_target.Enabled = false;
+            this.txt_target.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txt_target.Location = new System.Drawing.Point(194, 61);
+            this.txt_target.Name = "txt_target";
+            this.txt_target.Size = new System.Drawing.Size(75, 23);
+            this.txt_target.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(160, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 17);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "对话";
+            // 
             // dgv_client
             // 
             this.dgv_client.AllowUserToAddRows = false;
@@ -236,25 +256,6 @@
             this.dgv_client.TabIndex = 0;
             this.dgv_client.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_friend_CellClick);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(160, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 17);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "对话";
-            // 
-            // txt_target
-            // 
-            this.txt_target.Enabled = false;
-            this.txt_target.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txt_target.Location = new System.Drawing.Point(194, 61);
-            this.txt_target.Name = "txt_target";
-            this.txt_target.Size = new System.Drawing.Size(75, 23);
-            this.txt_target.TabIndex = 9;
-            // 
             // Column1
             // 
             this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -278,6 +279,7 @@
             this.Text = "Clicent";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

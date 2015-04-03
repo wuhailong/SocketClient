@@ -96,9 +96,9 @@ namespace SocketClient
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        public void Send()
         {
-            if (""==txt_target.Text)
+            if ("" == txt_target.Text)
             {
                 MessageBox.Show("未选择对话人物");
                 return;
@@ -108,6 +108,11 @@ namespace SocketClient
             SendMessage(sendStr);
             rch_back.Text += "\n" + sendStr;
             txt_message.Text = "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Send();
         }
 
         public delegate void SetTextHandler(string text);
@@ -232,6 +237,24 @@ namespace SocketClient
             if (clientThread!=null)
             {
                 clientThread.Abort();
+            }
+        }
+
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if (e.KeyChar == 27)
+            //{
+            //    Send();
+            //}
+        }
+
+        private void txt_message_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //MessageBox.Show(e.KeyChar.ToString());
+            if (e.KeyChar == '\r')
+            {
+                Send();
             }
         }
     }
