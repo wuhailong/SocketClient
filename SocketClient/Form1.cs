@@ -36,25 +36,24 @@ namespace SocketClient
         /// <param name="p_strMessage"></param>
         public void SendMessage(string p_strMessage)
         {
-            byte[] bs = Encoding.UTF8.GetBytes(p_strMessage);   //把字符串编码为字节
+            byte[] bs = Encoding.UTF8.GetBytes(p_strMessage);//把字符串编码为字节
             cc.Send(bs, bs.Length, 0); //发送信息
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
-             try
-             {
-                 user = txt_name.Text;
+            try
+            {
+                user = txt_name.Text;
                 int port = int.Parse(txt_port.Text);
                 string host = txt_ip.Text;
                 //创建终结点EndPoint
                 IPAddress ip = IPAddress.Parse(host);
                 IPEndPoint ipe = new IPEndPoint(ip, port);   //把ip和端口转化为IPEndPoint的实例
                 //创建Socket并连接到服务器
-                Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);   //  创建Socket
-                cc = c;
-                c.Connect(ipe); //连接到服务器
+                cc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);   //  创建Socket
+                cc.Connect(ipe); //连接到服务器
                 clientThread = new Thread(new ThreadStart(ReceiveData));
                 clientThread.Start();
                 //向服务器发送本机用户名，以便服务器注册客户端
@@ -62,11 +61,15 @@ namespace SocketClient
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine("argumentNullException:{0}", ex);
+                CommonFunction.WriteLog(ex, ex.Message);
             }
             catch (SocketException exp)
             {
-                Console.WriteLine("SocketException:{0}",exp);
+                CommonFunction.WriteLog(exp, exp.Message);
+                if (10061 == exp.ErrorCode)
+                {
+                    rch_back.Text = "服务器未开启！";
+                }
             }
         }
 
@@ -85,7 +88,7 @@ namespace SocketClient
                 string sender = u[0];
                 string veceiver = s[0];
                 string message = s[1];
-                if (txt_name.Text == veceiver)
+                if (txt_name.Text == veceiver || "ALL" == veceiver)
                 {
                     _strTemp = sender + ":" + message;
                     SetText(_strTemp);
@@ -177,6 +180,15 @@ namespace SocketClient
             catch (Exception exp)
             {
                 CommonFunction.WriteLog(exp,exp.Message);
+                if (cc != null)
+                {
+                    cc.Close();
+                }
+                if (clientThread != null)
+                {
+                    clientThread.Abort();
+                }
+
             }
         }
 
