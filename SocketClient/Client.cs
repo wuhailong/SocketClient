@@ -13,14 +13,14 @@ using ToolFunction;
 
 namespace SocketClient
 {
-    public partial class Form1 : Form
+    public partial class Client : Form
     {
         string target = "";
         string users = "";
         string user = "";
         Socket cc = null;
         Thread clientThread = null;
-        public Form1()
+        public Client()
         {
             InitializeComponent();
         }
@@ -256,6 +256,13 @@ namespace SocketClient
             {
                 Send();
             }
+        }
+
+        private void btn_file_Click(object sender, EventArgs e)
+        {
+            ofd_file.ShowDialog();
+            txt_filepath.Text = ofd_file.FileName;
+            cc.SendFile(ofd_file.FileName);
         }
     }
 }
